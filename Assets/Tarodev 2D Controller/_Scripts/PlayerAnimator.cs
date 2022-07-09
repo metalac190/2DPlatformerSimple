@@ -3,9 +3,7 @@ using Random = UnityEngine.Random;
 
 namespace TarodevController {
     /// <summary>
-    /// This is a pretty filthy script. I was just arbitrarily adding to it as I went.
-    /// You won't find any programming prowess here.
-    /// This is a supplementary script to help with effects and animation. Basically a juice factory.
+    /// Game Feel, effects, animation and audio
     /// </summary>
     public class PlayerAnimator : MonoBehaviour {
         [SerializeField] private Animator _anim;

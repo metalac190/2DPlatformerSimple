@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Collections;
 
 namespace TarodevController {
     /// <summary>
@@ -10,7 +11,7 @@ namespace TarodevController {
     /// if there's enough interest. You can play and compete for best times here: https://tarodev.itch.io/
     /// If you hve any questions or would like to brag about your score, come to discord: https://discord.gg/GqeHHnhHpz
     /// </summary>
-    public class PlayerController : MonoBehaviour, IPlayerController {
+    public class PlayerController : MonoBehaviour, IPlayerController, IPushable {
         // Public for external hooks
         public Vector3 Velocity { get; private set; }
         public FrameInput Input { get; private set; }
@@ -18,13 +19,29 @@ namespace TarodevController {
         public bool LandingThisFrame { get; private set; }
         public Vector3 RawMovement { get; private set; }
         public bool Grounded => _colDown;
+        public bool CanReceiveInput { get; private set; } = true;
 
         private Vector3 _lastPosition;
         private float _currentHorizontalSpeed, _currentVerticalSpeed;
+        // this is used for outside forces to affect the player (knockback, etc.)
+        private Vector3 _pushForce;
+        private Coroutine _decayPushForceRoutine;
+
+        [SerializeField]
+        [Tooltip("Collider is needed for activating trigger volumes. This gets " +
+            "resized to match the character bounds in Awake")]
+        BoxCollider2D _boxCollider;
 
         // This is horrible, but for some reason colliders are not fully established when update starts...
         private bool _active;
-        void Awake() => Invoke(nameof(Activate), 0.5f);
+        private void Awake()
+        {
+            Invoke(nameof(Activate), 0.5f);
+
+            // make sure collider matches our bounds for consistency
+            _boxCollider.offset = _characterBounds.center;
+            _boxCollider.size = _characterBounds.size;
+        } 
         void Activate() =>  _active = true;
         
         private void Update() {
@@ -33,7 +50,11 @@ namespace TarodevController {
             Velocity = (transform.position - _lastPosition) / Time.deltaTime;
             _lastPosition = transform.position;
 
-            GatherInput();
+            if (CanReceiveInput)
+                GatherInput();
+            else
+                ZeroOutInput();
+
             RunCollisionChecks();
 
             CalculateWalk(); // Horizontal movement
@@ -42,6 +63,16 @@ namespace TarodevController {
             CalculateJump(); // Possibly overrides vertical
 
             MoveCharacter(); // Actually perform the axis movement
+        }
+
+        private void ZeroOutInput()
+        {
+            Input = new FrameInput
+            {
+                JumpDown = false,
+                JumpUp = false,
+                X = 0
+            };
         }
 
 
@@ -62,7 +93,10 @@ namespace TarodevController {
 
         #region Collisions
 
-        [Header("COLLISION")] [SerializeField] private Bounds _characterBounds;
+        [Header("COLLISION")]
+        //[SerializeField] private BoxCollider2D _collider;
+        [SerializeField] private Bounds _characterBounds;
+
         [SerializeField] [Tooltip("Detect colliders in this layer to treat them" +
             "as ground")]private LayerMask _groundLayer;
         private int _detectorCount = 3;
@@ -271,7 +305,7 @@ namespace TarodevController {
         private void MoveCharacter() {
             var pos = transform.position;
             RawMovement = new Vector3(_currentHorizontalSpeed, _currentVerticalSpeed); // Used externally
-            var move = RawMovement * Time.deltaTime;
+            var move = (RawMovement + _pushForce) * Time.deltaTime;
             var furthestPoint = pos + move;
 
             // check furthest movement. If nothing hit, move and don't do extra checks
@@ -303,6 +337,48 @@ namespace TarodevController {
 
                 positionToMoveTo = posToTry;
             }
+        }
+
+        // allow outside forces to push the character, simulating physics
+        public void Push(Vector3 direction, float strength = 30, float duration = .5f)
+        {
+            // enforce 2D
+            direction = new Vector3(direction.x, direction.y, 0);
+            direction.Normalize();
+            // if our push force decay routine is already running, restart
+            // it with the new force
+            if (_decayPushForceRoutine != null)
+                StopCoroutine(_decayPushForceRoutine);
+            _decayPushForceRoutine = StartCoroutine(
+                DecayPushForceRoutine(direction * strength, duration)
+                );
+        }
+
+        private IEnumerator DecayPushForceRoutine(Vector3 pushForce, float duration)
+        {
+            _pushForce = pushForce;
+            // reset current upward velocity, so jumps don't affect bounce
+            _currentVerticalSpeed = 0;
+            // because we're accounting for gravity, apply Y force once, initially
+            //if (_useGravity)
+            //MoveY(pushForce.y);
+
+            for (float elapsedTime = 0; elapsedTime < duration; elapsedTime += Time.deltaTime)
+            {
+                // calculate
+                Vector3 newPushForce = Vector3.Lerp
+                    (pushForce, Vector3.zero, elapsedTime / duration);
+                _pushForce = newPushForce;
+                Debug.Log("Push Force: " + _pushForce);
+                yield return null;
+                // if we hit the ground, regain control
+                //if (Grounded)
+                    //break;
+            }
+
+            _pushForce = Vector3.zero;
+            // we can now control our character again
+            CanReceiveInput = true;
         }
 
         #endregion
