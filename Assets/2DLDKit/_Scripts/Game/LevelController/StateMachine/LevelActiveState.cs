@@ -32,7 +32,7 @@ public class LevelActiveState : State
         base.Enter();
 
         Debug.Log("LEVEL: Active");
-        _winTrigger.PlayerEntered += OnPlayerEnteredWin;
+        _winTrigger.Entered.AddListener(OnPlayerEnteredWin);
         _playerSpawner.PlayerRemoved += OnPlayerDied;
 
         // load elapsed time from data
@@ -43,7 +43,7 @@ public class LevelActiveState : State
     {
         base.Exit();
 
-        _winTrigger.PlayerEntered -= OnPlayerEnteredWin;
+        _winTrigger.Entered.RemoveListener(OnPlayerEnteredWin);
         _playerSpawner.PlayerRemoved -= OnPlayerDied;
 
         // save elapsed time to data

@@ -12,6 +12,9 @@ public class BounceZone : TriggerVolume
     private float _bounceAmount = 30;
     [SerializeField]
     private float _bounceDuration = .2f;
+    [SerializeField]
+    [Tooltip("Can affected object movign during push. Use this for more controlled knockback.")]
+    private bool _canMoveDuring = true;
 
     [Header("Bounce FX")]
     [SerializeField] private AudioClip _bounceSound;
@@ -32,7 +35,7 @@ public class BounceZone : TriggerVolume
                     (transform.position, enteredObject.transform.position);
             }
 
-            pushable.Push(bounceDirection, _bounceAmount, _bounceDuration);
+            pushable.Push(bounceDirection, _bounceAmount, _bounceDuration, _canMoveDuring);
 
             if (_bounceParticles != null)
                 Instantiate(_bounceParticles, transform.position, transform.rotation);

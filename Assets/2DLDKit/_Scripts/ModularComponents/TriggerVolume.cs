@@ -47,7 +47,6 @@ public class TriggerVolume : MonoBehaviour
         // if we're not in the layer, return
         if (!PhysicsHelper.IsInLayerMask(otherCollider.gameObject, _layersDetected)) { return; }
 
-        Debug.Log("Object Entered!");
         Entered.Invoke();
 
         TriggerEntered(otherCollider.gameObject);
@@ -108,7 +107,9 @@ public class TriggerVolume : MonoBehaviour
         }
         // set the color and draw it
         Gizmos.color = _gizmoColor;
-        Gizmos.DrawCube(transform.position, _collider.bounds.size);
+        Vector3 position = new Vector3(transform.position.x + _collider.offset.x,
+            transform.position.y + _collider.offset.y, 0);
+        Gizmos.DrawCube(position, _collider.bounds.size);
     }
     #endregion
 

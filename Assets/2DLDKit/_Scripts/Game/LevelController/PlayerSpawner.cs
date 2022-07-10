@@ -32,16 +32,16 @@ public class PlayerSpawner : MonoBehaviour
     public PlayerCharacter SpawnPlayer(Vector3 spawnPosition)
     {
         //Debug.Log("Spawn Player");
+
         // if there's already a player, remove it
-        if(_player != null)
+        PlayerCharacter existingPlayer = FindObjectOfType<PlayerCharacter>();
+        if(existingPlayer != null)
         {
-            RemoveExistingPlayer();
+            RemoveExistingPlayer(existingPlayer);
         }
 
         _player = Instantiate(_playerPrefab, spawnPosition, Quaternion.identity);
         //TODO look into a way to pass this information before instantiating (it calls awake before initialize)
-
-        _player.Health.Died.AddListener(OnPlayerDied);
 
         PlayerSpawned?.Invoke(_player);
 
@@ -50,16 +50,11 @@ public class PlayerSpawner : MonoBehaviour
         return _player;
     }
 
-    public void RemoveExistingPlayer()
+    public void RemoveExistingPlayer(PlayerCharacter playerToRemove)
     {
-        PlayerRemoved?.Invoke(_player);
-        Destroy(_player.gameObject);
+        // send out notification BEFORE destroying, in case anything wants to grab something
+        // from the player before it is removed
+        PlayerRemoved?.Invoke(playerToRemove);
+        Destroy(playerToRemove.gameObject);
     }
-
-    private void OnPlayerDied()
-    {
-        _player.Health.Died.RemoveListener(OnPlayerDied);
-        RemoveExistingPlayer();
-    }
-
 }

@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHUD : MonoBehaviour
+public class PlayerHUD : HUDScreen
 {
     [SerializeField]
     private PlayerCharacter _playerCharacter;
-    [SerializeField]
-    private Canvas _canvas;
     [SerializeField]
     private IconBar _healthBarGUI;
     [SerializeField]

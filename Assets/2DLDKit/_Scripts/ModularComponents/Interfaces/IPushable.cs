@@ -4,5 +4,6 @@ using UnityEngine;
 
 public interface IPushable
 {
-    void Push(Vector3 direction, float strength, float duration);
+    void Push(Vector3 direction, float strength, 
+        float duration, bool canMoveDuring = true);
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2010415367784037018}
   - component: {fileID: 2010415367784037019}
   m_Layer: 0
-  m_Name: GenericBurst
+  m_Name: VFX_Save
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -222,8 +222,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.96217597, b: 0.73018867, a: 1}
-      maxColor: {r: 1, g: 0.84337664, b: 0, a: 1}
+      minColor: {r: 0.47547168, g: 0.73106813, b: 1, a: 1}
+      maxColor: {r: 0, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

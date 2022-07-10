@@ -14,9 +14,9 @@ public class GameSession : SingletonMBPersistent<GameSession>
 
     public int DeathCount { get; set; } = 0;
     public int FragmentCount { get; set; } = 0;
-    public int ArtifactCount { get; set; } = 0;
     public int KeyCount { get; set; } = 0;
     public float ElapsedTime { get; set; } = 0;
+    public bool UseStartSpawn { get; private set; } = true;
 
     public bool IsFirstAttempt => DeathCount <= 0;
 
@@ -25,15 +25,14 @@ public class GameSession : SingletonMBPersistent<GameSession>
         SpawnLocation = Vector3.zero;
         DeathCount = 0;
         FragmentCount = 0;
-        ArtifactCount = 0;
         KeyCount = 0;
         ElapsedTime = 0;
+        UseStartSpawn = true;
     }
 
     public void SavePlayerData(Vector3 spawnPoint, PlayerCharacter player)
     {
         SpawnLocation = spawnPoint;
-
         FragmentCount = player.Inventory.Collectibles;
         KeyCount = player.Inventory.Keys;
     }

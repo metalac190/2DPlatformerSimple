@@ -43,7 +43,6 @@ public abstract class SingletonMBPersistent<T> : MonoBehaviour where T : MonoBeh
                         // Need to create a new GameObject to attach the singleton to.
                         var singletonObject = new GameObject(typeof(T).ToString() + " (Singleton)");
                         _instance = singletonObject.AddComponent<T>();
-
                         // Make instance persistent.
                         DontDestroyOnLoad(singletonObject);
                     }

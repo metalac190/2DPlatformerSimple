@@ -340,7 +340,8 @@ namespace TarodevController {
         }
 
         // allow outside forces to push the character, simulating physics
-        public void Push(Vector3 direction, float strength = 30, float duration = .5f)
+        public void Push(Vector3 direction, float strength = 30, 
+            float duration = .5f, bool canMoveDuring = true)
         {
             // enforce 2D
             direction = new Vector3(direction.x, direction.y, 0);
@@ -350,18 +351,17 @@ namespace TarodevController {
             if (_decayPushForceRoutine != null)
                 StopCoroutine(_decayPushForceRoutine);
             _decayPushForceRoutine = StartCoroutine(
-                DecayPushForceRoutine(direction * strength, duration)
+                DecayPushForceRoutine(direction * strength, duration, canMoveDuring)
                 );
         }
 
-        private IEnumerator DecayPushForceRoutine(Vector3 pushForce, float duration)
+        private IEnumerator DecayPushForceRoutine(Vector3 pushForce, float duration, bool canMoveDuring)
         {
             _pushForce = pushForce;
             // reset current upward velocity, so jumps don't affect bounce
             _currentVerticalSpeed = 0;
-            // because we're accounting for gravity, apply Y force once, initially
-            //if (_useGravity)
-            //MoveY(pushForce.y);
+            // lock out player movement if we're supposed to
+            CanReceiveInput = canMoveDuring;
 
             for (float elapsedTime = 0; elapsedTime < duration; elapsedTime += Time.deltaTime)
             {
@@ -369,11 +369,11 @@ namespace TarodevController {
                 Vector3 newPushForce = Vector3.Lerp
                     (pushForce, Vector3.zero, elapsedTime / duration);
                 _pushForce = newPushForce;
-                Debug.Log("Push Force: " + _pushForce);
+
                 yield return null;
                 // if we hit the ground, regain control
-                //if (Grounded)
-                    //break;
+                if (Grounded)
+                    break;
             }
 
             _pushForce = Vector3.zero;

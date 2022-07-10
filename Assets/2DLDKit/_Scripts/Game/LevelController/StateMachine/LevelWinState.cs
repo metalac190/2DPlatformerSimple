@@ -32,7 +32,7 @@ public class LevelWinState : State
 
         //TODO optionally, we could create a 'PlayerInactive' state that doesn't take input,
         // in the meantime just remove it for simplicity
-        _playerSpawner.RemoveExistingPlayer();
+        //_playerSpawner.RemoveExistingPlayer();
     }
 
     public override void Exit()
