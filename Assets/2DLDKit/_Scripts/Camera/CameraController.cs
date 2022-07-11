@@ -2,14 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
-    // specify an object to follow
-    [SerializeField]
-    [Tooltip("If this is not specified, " +
-        "it will search for the player")]
-    private Transform _objectToFollow = null;
-
     [Header("Camera")]
     [SerializeField] private Camera _camera = null;
     [SerializeField][Tooltip("Technically this is the 'Size' property on the camera" +
@@ -22,11 +16,19 @@ public class CameraFollow : MonoBehaviour
     [Tooltip("Horizontal distance camera centers to away from player. 0 centers player")]
     private float _defaultHorizontalOffset = 0;
 
+    [Header("Smoothing")]
+    [SerializeField]
+    private bool _useSmoothing = false;
+    [SerializeField]
+    [Range(3,7)]
+    private float _smoothSpeed = 5;
+
     private float _yOffset = 0;
     private float _xOffset = 0;
     private float _zOffset = 0;
 
     private Vector3 _offset;
+    private Transform _objectToFollow = null;
 
     private void Awake()
     {
@@ -65,7 +67,18 @@ public class CameraFollow : MonoBehaviour
         // if object is specified, move the camera
         if(_objectToFollow != null)
         {
-            transform.position = _objectToFollow.position + _offset;
+            if (_useSmoothing)
+            {
+                Vector3 targetPosition = _objectToFollow.position + _offset;
+                Vector3 smoothedPosition = Vector3.Lerp(transform.position,
+                    targetPosition, _smoothSpeed * Time.deltaTime);
+                // move the camera to the new position
+                transform.position = smoothedPosition;
+            }
+            else
+            {
+                transform.position = _objectToFollow.position + _offset;
+            }
         }
     }
 

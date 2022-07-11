@@ -19638,14 +19638,14 @@ MonoBehaviour:
   _deAcceleration: 60
   _apexBonus: 2
   _fallClamp: -40
-  _minFallSpeed: 80
-  _maxFallSpeed: 120
+  _minFallSpeed: 70
+  _maxFallSpeed: 110
   _jumpHeight: 30
   _jumpApexThreshold: 10
   _coyoteTimeThreshold: 0.1
   _jumpBuffer: 0.1
   _jumpEndEarlyGravityModifier: 3
-  _freeColliderIterations: 10
+  _freeColliderIterations: 15
 --- !u!114 &8555979261945358711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19673,6 +19673,7 @@ MonoBehaviour:
   _max: 2
   _current: 2
   _isDamageable: 1
+  _hitInvulDuration: 0.5
   Damaged:
     m_PersistentCalls:
       m_Calls: []
@@ -20006,6 +20007,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826173a14ddd18d44a68196399e7e727, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: 125334261195993207}
-  _deathParticlePrefab: {fileID: 653273450618745292, guid: 561f581097942f6428be88d42381bca0, type: 3}
+  _damagedSound: {fileID: 8300000, guid: 91665bff6d014434090a4037554c84b2, type: 3}
+  _damagedParticlePrefab: {fileID: 653273450618745292, guid: ab2c23b7d2b5d6c4481794788009436d, type: 3}
   _deathSound: {fileID: 8300000, guid: 1c946173af8916745aba52ada4ef0ea5, type: 3}
+  _deathParticlePrefab: {fileID: 653273450618745292, guid: 561f581097942f6428be88d42381bca0, type: 3}
+  _flashColor: {r: 1, g: 0, b: 0, a: 1}
+  _health: {fileID: 125334261195993207}
+  _renderer: {fileID: 4646659593778855864}

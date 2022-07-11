@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class PlayerHUD : HUDScreen
 {
     [SerializeField]
-    private PlayerCharacter _playerCharacter;
-    [SerializeField]
     private IconBar _healthBarGUI;
     [SerializeField]
     private Text _collectiblesTextUI;
@@ -16,14 +14,7 @@ public class PlayerHUD : HUDScreen
 
     private Health _health;
     private Inventory _inventory;
-
-    private void Awake()
-    {
-        if(_playerCharacter != null)
-        {
-            Initialize(_playerCharacter);
-        }
-    }
+    private PlayerCharacter _playerCharacter;
 
     public void Initialize(PlayerCharacter playerCharacter)
     {

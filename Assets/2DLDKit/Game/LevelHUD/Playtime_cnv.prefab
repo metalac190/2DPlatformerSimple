@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7679695464358197854}
   - component: {fileID: 7679695464358197855}
   - component: {fileID: 7679695464358197852}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Playtime_cnv
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 7679695465096153541}
   - component: {fileID: 7679695465096153539}
   - component: {fileID: 7679695465096153540}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background_img
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -203,7 +203,7 @@ GameObject:
   - component: {fileID: 7679695465235309015}
   - component: {fileID: 7679695465235309013}
   - component: {fileID: 7679695465235309014}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ElapsedTime_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,10 +225,10 @@ RectTransform:
   m_Father: {fileID: 7679695466247287607}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 194.70004, y: 0}
-  m_SizeDelta: {x: 200, y: 80}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 15, y: 0}
+  m_SizeDelta: {x: 120, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7679695465235309013
 CanvasRenderer:
@@ -260,10 +260,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5ce53d77074ddc440809a612bc4bebc3, type: 3}
-    m_FontSize: 60
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 6
+    m_MinSize: 5
     m_MaxSize: 84
     m_Alignment: 3
     m_AlignByGeometry: 0
@@ -271,7 +271,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 00:01
+  m_Text: '0:00
+
+'
 --- !u!1 &7679695465404698415
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +285,7 @@ GameObject:
   - component: {fileID: 7679695465404698414}
   - component: {fileID: 7679695465404698412}
   - component: {fileID: 7679695465404698413}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ElapsedTimeHeader_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -305,10 +307,10 @@ RectTransform:
   m_Father: {fileID: 7679695466247287607}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 202, y: 0}
-  m_SizeDelta: {x: 166.9, y: 80}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 15, y: 0}
+  m_SizeDelta: {x: 113.656006, y: 50}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &7679695465404698412
 CanvasRenderer:
@@ -340,10 +342,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5ce53d77074ddc440809a612bc4bebc3, type: 3}
-    m_FontSize: 60
+    m_FontSize: 50
     m_FontStyle: 1
     m_BestFit: 0
-    m_MinSize: 6
+    m_MinSize: 5
     m_MaxSize: 84
     m_Alignment: 3
     m_AlignByGeometry: 0
@@ -363,7 +365,7 @@ GameObject:
   - component: {fileID: 7679695466247287607}
   - component: {fileID: 7679695466247287605}
   - component: {fileID: 7679695466247287606}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: PlaytimeScreen_pnl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,11 +390,11 @@ RectTransform:
   m_Father: {fileID: 7679695464358197920}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1050, y: 25}
-  m_SizeDelta: {x: 350, y: 100}
-  m_Pivot: {x: 1, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -15}
+  m_SizeDelta: {x: 260, y: 60}
+  m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &7679695466247287605
 CanvasRenderer:
   m_ObjectHideFlags: 0

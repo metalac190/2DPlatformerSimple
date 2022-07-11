@@ -5,36 +5,38 @@ using UnityEngine;
 public class LevelActiveState : State
 {
     private LevelFSM _stateMachine;
+    private LevelController _controller;
 
     private WinTrigger _winTrigger;
-    private PlayerSpawner _playerSpawner;
 
-    private PlayerCharacter _activePlayer;
     private GameSession _gameSession;
     private PlaytimeScreen _playtimeScreen;
+    private PlayerInput _playerInput;
 
     private float _elapsedTime;
 
 
-    public LevelActiveState(LevelFSM stateMachine, LevelController levelController)
+    public LevelActiveState(LevelFSM stateMachine, LevelController controller)
     {
         _stateMachine = stateMachine;
+        _controller = controller;
 
-        _winTrigger = levelController.WinTrigger;
-        _playerSpawner = levelController.PlayerSpawner;
+        _winTrigger = controller.WinTrigger;
         _gameSession = GameSession.Instance;
-        _playtimeScreen = levelController.LevelHUD.PlaytimeScreen;
-
+        _playtimeScreen = controller.LevelHUD.PlaytimeScreen;
+        _playerInput = controller.PlayerInput;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        Debug.Log("LEVEL: Active");
+        // Debug.Log("LEVEL: Active");
         _winTrigger.Entered.AddListener(OnPlayerEnteredWin);
-        _playerSpawner.PlayerRemoved += OnPlayerDied;
-
+        // pull this from active player since it's not spawned before level load
+        
+        _controller.ActivePlayerCharacter.Health.Died.AddListener(OnPlayerDied);
+        _playerInput.EscapePressed += OnEscapePressed;
         // load elapsed time from data
         _elapsedTime = _gameSession.ElapsedTime;
     }
@@ -44,7 +46,8 @@ public class LevelActiveState : State
         base.Exit();
 
         _winTrigger.Entered.RemoveListener(OnPlayerEnteredWin);
-        _playerSpawner.PlayerRemoved -= OnPlayerDied;
+        _controller.ActivePlayerCharacter.Health.Died.RemoveListener(OnPlayerDied);
+        _playerInput.EscapePressed -= OnEscapePressed;
 
         // save elapsed time to data
         _gameSession.ElapsedTime = _elapsedTime;
@@ -70,11 +73,8 @@ public class LevelActiveState : State
         _stateMachine.ChangeState(_stateMachine.WinState);
     }
 
-    private void OnPlayerDied(PlayerCharacter player)
+    private void OnPlayerDied()
     {
-        Debug.Log("Player DIED!");
-        
-        _gameSession.DeathCount++;
         _stateMachine.ChangeState(_stateMachine.LoseState);
     }
 
@@ -83,5 +83,12 @@ public class LevelActiveState : State
         // reset level data. Make this clear to player in the future, and consider putting in menus
         _gameSession.ClearGameSession();
         LevelLoader.ReloadLevel();
+    }
+
+    private void OnEscapePressed()
+    {
+        //TODO leave hook for main menu
+        Debug.Log("Quit Game");
+        Application.Quit();
     }
 }

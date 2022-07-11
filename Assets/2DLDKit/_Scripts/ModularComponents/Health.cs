@@ -12,6 +12,7 @@ public class Health : MonoBehaviour
     [SerializeField] private int _max = 10;
     [SerializeField] private int _current;
     [SerializeField] private bool _isDamageable = true;
+    [SerializeField] private float _hitInvulDuration = .5f;
 
     public UnityEvent<int> Damaged;
     public UnityEvent Died;
@@ -47,6 +48,9 @@ public class Health : MonoBehaviour
         }
     }
 
+    public float HitInvulDuration => _hitInvulDuration;
+    public bool IsHitInvul { get; private set; } = false;
+
     public virtual void Heal(int amount)
     {
         Current += amount;
@@ -55,11 +59,15 @@ public class Health : MonoBehaviour
     public virtual void Damage(int amount)
     {
         if (!_isDamageable) return;
+        if (IsHitInvul) return;
 
         Current -= amount;
         Damaged?.Invoke(amount);
-
+        Debug.Log("Damaged. New Health " + Current);
         Current = Mathf.Clamp(Current, 0, _max);
+        // start hit invulnerability
+        IsHitInvul = true;
+        Invoke(nameof(RemoveHitInvul), _hitInvulDuration);
 
         if(Current == 0)
         {
@@ -75,5 +83,17 @@ public class Health : MonoBehaviour
         Died?.RemoveAllListeners();
 
         Destroy(gameObject);
+    }
+
+    private void RemoveHitInvul()
+    {
+        IsHitInvul = false;
+    }
+
+    private IEnumerator HitInvulRoutine(float duration)
+    {
+        IsHitInvul = true;
+        yield return new WaitForSeconds(duration);
+        IsHitInvul = false;
     }
 }

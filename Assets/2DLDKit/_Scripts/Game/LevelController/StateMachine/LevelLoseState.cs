@@ -7,19 +7,28 @@ public class LevelLoseState : State
     private LevelFSM _stateMachine;
 
     private PlayerSpawner _playerSpawner;
+    private GameSession _gameSession;
+    private HUDScreen _loseScreen;
+
+    float _respawnDelay = 0;
 
     public LevelLoseState(LevelFSM stateMachine, LevelController controller)
     {
         _stateMachine = stateMachine;
 
         _playerSpawner = controller.PlayerSpawner;
+        _gameSession = GameSession.Instance;
+        _respawnDelay = controller.LevelData.RespawnDelay;
+        _loseScreen = controller.LevelHUD.LoseScreen;
     }
 
     public override void Enter()
     {
         base.Enter();
         Debug.Log("STATE: Lose state");
-        //TODO save data on death, so we can determine respawn point
+
+        _gameSession.DeathCount++;
+        // _loseScreen.Display();
     }
 
     public override void Exit()
@@ -36,7 +45,7 @@ public class LevelLoseState : State
     {
         base.Update();
 
-        if(StateDuration >= _playerSpawner.RespawnDelay)
+        if(StateDuration >= _respawnDelay)
         {
             LevelLoader.ReloadLevel();
             return;

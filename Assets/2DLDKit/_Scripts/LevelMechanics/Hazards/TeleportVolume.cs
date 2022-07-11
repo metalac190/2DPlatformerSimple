@@ -9,21 +9,16 @@ public class TeleportVolume : TriggerVolume
     private Transform _exitTransform;
     [SerializeField]
     private ParticleSystem _exitParticles;
+    [SerializeField]
+    private AudioClip _teleportSound;
 
     protected override void TriggerEntered(GameObject enteredObject)
     {
-        Rigidbody2D rb = enteredObject.GetComponent<Rigidbody2D>();
+        if (_exitParticles != null)
+            Instantiate(_exitParticles, _exitTransform.position, Quaternion.identity);
+        if (_teleportSound != null)
+            AudioHelper.PlayClip2D(_teleportSound, 1);
 
-        if(rb != null)
-        {
-            if(_exitParticles != null)
-            {
-                ParticleSystem exitParticles = Instantiate
-                    (_exitParticles, _exitTransform.position, Quaternion.identity);
-                exitParticles.Play();
-            }
-
-            rb.MovePosition(_exitTransform.position);
-        }
+        enteredObject.transform.position = _exitTransform.position;
     }
 }

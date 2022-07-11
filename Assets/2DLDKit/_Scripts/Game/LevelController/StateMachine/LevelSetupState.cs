@@ -10,27 +10,32 @@ using UnityEngine;
 public class LevelSetupState : State
 {
     private LevelFSM _stateMachine;
+    private LevelController _controller;
 
     private GameSession _gameSession;
     private PlayerSpawner _playerSpawner;
-    private IntroScreen _introScreen;
+    private CameraController _cameraController;
+
     private PlaytimeScreen _playtimeScreen;
+    private PlayerHUD _playerHUD;
 
     public LevelSetupState(LevelFSM stateMachine, LevelController controller)
     {
         _stateMachine = stateMachine;
+        _controller = controller;
 
         _playerSpawner = controller.PlayerSpawner;
         _gameSession = GameSession.Instance;
-        _introScreen = controller.LevelHUD.IntroScreen;
+        _cameraController = controller.CameraController;
+
         _playtimeScreen = controller.LevelHUD.PlaytimeScreen;
+        _playerHUD = controller.LevelHUD.PlayerHUD;
     }
 
     public override void Enter()
     {
         base.Enter();
 
-        _introScreen.Display();
         _playtimeScreen.Display();
     }
 
@@ -47,7 +52,7 @@ public class LevelSetupState : State
     public override void Update()
     {
         base.Update();
-
+        // if this is our first attempt, leave the option to do stuff before beginning play
         if (_gameSession.IsFirstAttempt)
         {
             _gameSession.ClearGameSession();
@@ -55,12 +60,25 @@ public class LevelSetupState : State
             _stateMachine.ChangeState(_stateMachine.IntroState);
             return;
         }
+        // otherwise continue play at previous checkpoint
         else
         {
-            PlayerCharacter player = _playerSpawner.SpawnPlayer(_gameSession.SpawnLocation);
-            _gameSession.LoadPlayerData(player);
+            SpawnPlayer();
             _stateMachine.ChangeState(_stateMachine.ActiveState);
             return;
         }
+    }
+
+    private void SpawnPlayer()
+    {
+        // spawning
+        _controller.ActivePlayerCharacter
+            = _playerSpawner.SpawnPlayer(_gameSession.SpawnLocation);
+        _gameSession.LoadPlayerData(_controller.ActivePlayerCharacter);
+        // camera
+        _cameraController.FollowNewTarget(_controller.ActivePlayerCharacter.transform);
+        // ui
+        _playerHUD.Display();
+        _playerHUD.Initialize(_controller.ActivePlayerCharacter);
     }
 }

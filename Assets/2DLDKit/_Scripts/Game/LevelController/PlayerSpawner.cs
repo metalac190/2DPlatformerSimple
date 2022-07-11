@@ -8,21 +8,15 @@ public class PlayerSpawner : MonoBehaviour
     public event Action<PlayerCharacter> PlayerSpawned;
     public event Action<PlayerCharacter> PlayerRemoved;
 
-    [SerializeField]
-    private LevelController _levelController;
-
     [Header("Player Spawning")]
 
     [SerializeField]
     private Transform _startSpawnLocation;
     [SerializeField]
-    private float _respawnDelay = 1.5f;
-    [SerializeField]
     private PlayerCharacter _playerPrefab;
 
     private PlayerCharacter _player;
 
-    public float RespawnDelay => _respawnDelay;
     public PlayerCharacter ActivePlayer => _player;
     public Transform StartSpawnLocation => _startSpawnLocation;
 

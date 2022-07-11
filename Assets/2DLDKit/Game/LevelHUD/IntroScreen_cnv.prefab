@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3255650333047995140}
   - component: {fileID: 3255650333047995138}
   - component: {fileID: 3255650333047995139}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Title_txt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 3255650333576055818}
   - component: {fileID: 3255650333576055816}
   - component: {fileID: 3255650333576055817}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: IntroScreen_pnl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 3255650333982181584}
   - component: {fileID: 3255650333982181585}
   - component: {fileID: 3255650333982181550}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: IntroScreen_cnv
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +275,6 @@ MonoBehaviour:
   _canvas: {fileID: 3255650333982181551}
   _levelData: {fileID: 11400000, guid: 76a2aaf1a93b63240bd986e5d1ed463e, type: 2}
   _titleText: {fileID: 3255650333047995139}
-  _displayDuration: 1.5
 --- !u!1 &3255650334890806902
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +286,7 @@ GameObject:
   - component: {fileID: 3255650334890806901}
   - component: {fileID: 3255650334890806899}
   - component: {fileID: 3255650334890806900}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background_img
   m_TagString: Untagged
   m_Icon: {fileID: 0}

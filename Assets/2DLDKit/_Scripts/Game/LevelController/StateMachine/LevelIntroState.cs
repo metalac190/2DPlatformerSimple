@@ -10,22 +10,33 @@ using UnityEngine;
 public class LevelIntroState : State
 {
     private LevelFSM _stateMachine;
+    private LevelController _controller;
 
     private PlayerSpawner _playerSpawner;
     private GameSession _gameSession;
+    private CameraController _cameraController;
+    private PlayerHUD _playerHUD;
+    private HUDScreen _introScreen;
+
 
     public LevelIntroState(LevelFSM stateMachine, LevelController controller)
     {
         _stateMachine = stateMachine;
+        _controller = controller;
 
         _playerSpawner = controller.PlayerSpawner;
         _gameSession = GameSession.Instance;
+        _cameraController = controller.CameraController;
+        _playerHUD = controller.LevelHUD.PlayerHUD;
+        _introScreen = controller.LevelHUD.IntroScreen;
     }
 
     public override void Enter()
     {
         base.Enter();
-        //Debug.Log("LEVEL: Intro");
+        // Debug.Log("LEVEL: Intro");
+
+        _introScreen.Display();
     }
 
     public override void Exit()
@@ -42,19 +53,26 @@ public class LevelIntroState : State
     public override void Update()
     {
         base.Update();
-        // check if our cutscene is complete, if we have one. For now, just skip
-        if (Input.GetButtonDown("Fire1"))
-        {
-            BeginLevel();
-        }
+        // TODO check if our cutscene is complete, if we have one. For now, just skip
+
         BeginLevel();
     }
 
     private void BeginLevel()
     {
-
-        PlayerCharacter player = _playerSpawner.SpawnPlayer(_gameSession.SpawnLocation);
-        _gameSession.LoadPlayerData(player);
+        SpawnPlayer();
         _stateMachine.ChangeState(_stateMachine.ActiveState);
+    }
+
+    private void SpawnPlayer()
+    {
+        // spawn
+        _controller.ActivePlayerCharacter = _playerSpawner.SpawnPlayer(_gameSession.SpawnLocation);
+        _gameSession.LoadPlayerData(_controller.ActivePlayerCharacter);
+        // camera
+        _cameraController.FollowNewTarget(_controller.ActivePlayerCharacter.transform);
+        // ui
+        _playerHUD.Display();
+        _playerHUD.Initialize(_controller.ActivePlayerCharacter);
     }
 }

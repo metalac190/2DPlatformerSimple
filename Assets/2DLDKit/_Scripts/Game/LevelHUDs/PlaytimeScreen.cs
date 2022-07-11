@@ -14,7 +14,6 @@ public class PlaytimeScreen : HUDScreen
 
     public void IncrementPlaytimeDisplay(float elapsedTime)
     {
-
         int minutes = TimeHelper.ConvertToMin(elapsedTime);
         int seconds = TimeHelper.ConvertToSec(elapsedTime);
         // only reformat time if a value has changed since last update, for optimization

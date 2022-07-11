@@ -36,7 +36,7 @@ namespace TarodevController {
         private bool _active;
         private void Awake()
         {
-            Invoke(nameof(Activate), 0.5f);
+            Invoke(nameof(Activate), .75f);
 
             // make sure collider matches our bounds for consistency
             _boxCollider.offset = _characterBounds.center;

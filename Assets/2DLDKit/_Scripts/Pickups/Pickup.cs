@@ -6,11 +6,10 @@ using UnityEngine;
 public abstract class Pickup : MonoBehaviour
 {
     // this is our template method. Subclasses must implement
-    protected abstract void OnPickup(GameObject player);
+    protected abstract void OnPickup(PlayerCharacter playerCharacter);
 
-    [Header("Particles")]
-    [SerializeField] ParticleSystem _particlePrefab = null;
-    [Header("Sound")]
+    [Header("FX")]
+    [SerializeField] ParticleSystem _pickupParticlePrefab = null;
     [SerializeField] AudioClip _pickupSound = null;
 
     // Reset gets called whenever you add a component to an object
@@ -24,20 +23,20 @@ public abstract class Pickup : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // guard clause
-        if (other.CompareTag("Player") == false)
-            return;
-    
+        PlayerCharacter playerCharacter = other.attachedRigidbody.GetComponent<PlayerCharacter>();
+        if (playerCharacter == null) { return; }
+
         // found the player! call our abstract method and supporting feedback
-        OnPickup(other.gameObject);
+        OnPickup(playerCharacter);
 
         if (_pickupSound != null)
         {
-            //
+            AudioHelper.PlayClip2D(_pickupSound, 1);
         }
 
-        if (_particlePrefab != null)
+        if (_pickupParticlePrefab != null)
         {
-            SpawnParticle(_particlePrefab);
+            SpawnParticle(_pickupParticlePrefab);
         }
 
         Disable();

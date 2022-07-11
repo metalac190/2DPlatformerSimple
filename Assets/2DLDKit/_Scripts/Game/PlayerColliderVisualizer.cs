@@ -6,6 +6,8 @@ public class PlayerColliderVisualizer : MonoBehaviour
 {
     [SerializeField]
     private BoxCollider2D _playerPrefabCollider;
+    [SerializeField]
+    private Color _wireframeColor = Color.cyan;
 
     private void OnDrawGizmos()
     {
@@ -14,7 +16,7 @@ public class PlayerColliderVisualizer : MonoBehaviour
             // convert Vector2D fields to Vector3
             Vector3 boxSize = new Vector3(_playerPrefabCollider.size.x, _playerPrefabCollider.size.y);
             Vector3 colliderOffset = new Vector3(_playerPrefabCollider.offset.x, _playerPrefabCollider.offset.y);
-            Gizmos.color = Color.cyan;
+            Gizmos.color = _wireframeColor;
             Gizmos.DrawWireCube(transform.position + colliderOffset, boxSize);
         }
     }

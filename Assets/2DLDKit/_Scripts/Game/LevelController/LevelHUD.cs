@@ -5,16 +5,19 @@ using UnityEngine;
 public class LevelHUD : MonoBehaviour
 {
     [SerializeField]
-    private IntroScreen _introScreen;
+    private HUDScreen _introScreen;
     [SerializeField]
-    private WinScreen _winScreen;
+    private HUDScreen _winScreen;
+    [SerializeField]
+    private HUDScreen _loseScreen;
     [SerializeField]
     private PlaytimeScreen _playtimeScreen;
     [SerializeField]
     private PlayerHUD _playerHUD;
 
-    public IntroScreen IntroScreen => _introScreen;
-    public WinScreen WinScreen => _winScreen;
+    public HUDScreen IntroScreen => _introScreen;
+    public HUDScreen WinScreen => _winScreen;
+    public HUDScreen LoseScreen => _loseScreen;
     public PlaytimeScreen PlaytimeScreen => _playtimeScreen;
     public PlayerHUD PlayerHUD => _playerHUD;
 

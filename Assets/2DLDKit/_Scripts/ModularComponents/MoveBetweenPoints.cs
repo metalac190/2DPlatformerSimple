@@ -21,9 +21,9 @@ public class MoveBetweenPoints : MonoBehaviour
 
     [Header("Movement Settings")]
     [SerializeField][Tooltip("Seconds from start to end location")]
-    private float _secondsUntilDestination;
+    private float _secondsUntilDestination = 1;
     [SerializeField][Tooltip("Duration in seconds to pause after reaching destination")]
-    private float _pauseDuration;
+    private float _pauseDuration = 1;
 
     [Header("General Settings")]
     [SerializeField][Tooltip("True will begin movement on scene start. Disable if you'd like to control" +
@@ -32,6 +32,10 @@ public class MoveBetweenPoints : MonoBehaviour
     [SerializeField][Tooltip("Duration before starting movement. Use this to stagger timing while" +
         " retaining the desired speed")]
     private float _startDelay = 0;
+
+    [Header("Gizmo Settings")]
+    [SerializeField]
+    private Color _endWireColor = Color.grey;
 
     private MoveState _moveState = MoveState.Inactive;
 
@@ -141,7 +145,7 @@ public class MoveBetweenPoints : MonoBehaviour
     {
         if(_objectCollider == null || _endLocation == null) { return; }
 
-        Gizmos.color = Color.yellow;
+        Gizmos.color = _endWireColor;
         Gizmos.DrawWireCube(_endLocation.position, _objectCollider.bounds.size);
     }
 }

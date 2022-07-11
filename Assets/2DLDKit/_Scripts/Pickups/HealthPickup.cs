@@ -7,12 +7,8 @@ public class HealthPickup : Pickup
     [SerializeField]
     private int _healAmount = 1;
 
-    protected override void OnPickup(GameObject player)
+    protected override void OnPickup(PlayerCharacter playerCharacter)
     {
-        Health health = player.GetComponent<Health>();
-        if (health != null)
-        {
-            health.Heal(_healAmount);
-        }
+        playerCharacter.Health.Heal(_healAmount);
     }
 }
