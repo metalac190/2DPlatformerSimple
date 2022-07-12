@@ -11,14 +11,6 @@ public enum MoveState
 
 public class MoveBetweenPoints : MonoBehaviour
 {
-    [SerializeField]
-    private Rigidbody2D _rb;
-    [SerializeField]
-    private Collider2D _objectCollider;
-    [SerializeField]
-    [Tooltip("Destination transform to move towards")]
-    private Transform _endLocation;
-
     [Header("Movement Settings")]
     [SerializeField][Tooltip("Seconds from start to end location")]
     private float _secondsUntilDestination = 1;
@@ -33,6 +25,15 @@ public class MoveBetweenPoints : MonoBehaviour
         " retaining the desired speed")]
     private float _startDelay = 0;
 
+    [Header("Dependencies")]
+    [SerializeField]
+    private Rigidbody2D _rb;
+    [SerializeField]
+    private Collider2D _objectCollider;
+    [SerializeField]
+    [Tooltip("Destination transform to move towards")]
+    private Transform _endLocation;
+
     [Header("Gizmo Settings")]
     [SerializeField]
     private Color _endWireColor = Color.grey;
@@ -41,8 +42,8 @@ public class MoveBetweenPoints : MonoBehaviour
 
     private int _tripCounter = 1;
     private float _movingElapsedTime;
-    private Vector2 _startPosition;
-    private Vector2 _endPosition;
+    private Vector3 _startPosition;
+    private Vector3 _endPosition;
     private Coroutine _moveRoutine;
     // we need to save our movement change so we can carry other objects
     public Vector2 PreviousPosition { get; private set; }
@@ -129,7 +130,7 @@ public class MoveBetweenPoints : MonoBehaviour
         float moveRatio = Mathf.PingPong(_movingElapsedTime / secondsUntilDestination, 1f);
         // saving previous position allows us to calculate the move vector for objects that need to be carried
 
-        Vector2 newPosition = Vector2.Lerp(_startPosition, _endPosition,
+        Vector3 newPosition = Vector3.Lerp(_startPosition, _endPosition,
             Mathf.SmoothStep(0f, 1f, moveRatio));
 
         _rb.MovePosition(newPosition);
@@ -146,6 +147,26 @@ public class MoveBetweenPoints : MonoBehaviour
         if(_objectCollider == null || _endLocation == null) { return; }
 
         Gizmos.color = _endWireColor;
-        Gizmos.DrawWireCube(_endLocation.position, _objectCollider.bounds.size);
+        // Draw differently if we're in playmode, since at start of play we save start/end
+        // We do this because child object movement on transform can mess up the drawing
+        if (Application.isPlaying)
+        {
+            // start
+            Gizmos.DrawWireCube(_startPosition, _objectCollider.bounds.size);
+            // end
+            Gizmos.DrawWireCube(_endPosition, _objectCollider.bounds.size);
+            // line
+            Gizmos.DrawLine(_startPosition, _endPosition);
+        }
+        else
+        {
+            // start
+            Gizmos.DrawWireCube(_objectCollider.transform.position, _objectCollider.bounds.size);
+            // end
+            Gizmos.DrawWireCube(_endLocation.position, _objectCollider.bounds.size);
+            // draw path connection Gizmo
+            Gizmos.DrawLine(_objectCollider.transform.position, _endLocation.position);
+        }
+
     }
 }

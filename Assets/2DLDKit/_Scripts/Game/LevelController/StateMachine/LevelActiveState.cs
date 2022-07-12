@@ -32,7 +32,7 @@ public class LevelActiveState : State
         base.Enter();
 
         // Debug.Log("LEVEL: Active");
-        _winTrigger.Entered.AddListener(OnPlayerEnteredWin);
+        _winTrigger.Won.AddListener(OnPlayerEnteredWin);
         // pull this from active player since it's not spawned before level load
         
         _controller.ActivePlayerCharacter.Health.Died.AddListener(OnPlayerDied);
@@ -45,7 +45,7 @@ public class LevelActiveState : State
     {
         base.Exit();
 
-        _winTrigger.Entered.RemoveListener(OnPlayerEnteredWin);
+        _winTrigger.Won.RemoveListener(OnPlayerEnteredWin);
         _controller.ActivePlayerCharacter.Health.Died.RemoveListener(OnPlayerDied);
         _playerInput.EscapePressed -= OnEscapePressed;
 

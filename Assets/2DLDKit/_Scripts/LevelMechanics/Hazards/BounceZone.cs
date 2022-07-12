@@ -9,9 +9,9 @@ public class BounceZone : TriggerVolume
     [Tooltip("If true this bounces in opposite direction, instead of indicated direction")]
     private bool _bounceOpposite = false;
     [SerializeField]
-    private float _bounceAmount = 30;
+    private float _bounceAmount = 35;
     [SerializeField]
-    private float _bounceDuration = .2f;
+    private float _bounceDuration = .5f;
     [SerializeField]
     [Tooltip("Can affected object movign during push. Use this for more controlled knockback.")]
     private bool _canMoveDuring = true;

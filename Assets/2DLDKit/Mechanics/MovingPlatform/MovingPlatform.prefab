@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4210535369407353070}
   - component: {fileID: 1493923730466811468}
   - component: {fileID: 3437804580151790228}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: CarryZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,3 +322,4 @@ MonoBehaviour:
   _pauseDuration: 1
   _activateOnAwake: 1
   _startDelay: 0
+  _endWireColor: {r: 0.69353294, g: 1, b: 0.4943396, a: 1}

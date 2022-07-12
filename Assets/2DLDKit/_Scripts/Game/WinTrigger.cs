@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 public class WinTrigger : TriggerVolume
 {
@@ -11,16 +12,16 @@ public class WinTrigger : TriggerVolume
     [SerializeField]
     private ParticleSystem _winParticlePrefab;
 
+    public UnityEvent Won;
+
     protected override void TriggerEntered(GameObject enteredObject)
     {
-        PlayerCharacter player = enteredObject.GetComponent<PlayerCharacter>();
-        if (player != null)
-        {
-            Debug.Log("WIN");
-            if (_winSound != null)
-                AudioHelper.PlayClip2D(_winSound, 1);
-            if (_winParticlePrefab != null)
-                Instantiate(_winParticlePrefab, transform.position, Quaternion.identity);
-        }
+        Debug.Log("WIN");
+        if (_winSound != null)
+            AudioHelper.PlayClip2D(_winSound, 1);
+        if (_winParticlePrefab != null)
+            Instantiate(_winParticlePrefab, transform.position, Quaternion.identity);
+
+        Won.Invoke();
     }
 }
