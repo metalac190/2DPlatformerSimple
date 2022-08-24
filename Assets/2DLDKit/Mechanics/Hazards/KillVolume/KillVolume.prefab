@@ -46,20 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd0458b1064484b4daa8a605cde81a82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _oneShot: 0
-  _specificTriggerObject: {fileID: 0}
   _layersDetected:
     serializedVersion: 2
     m_Bits: 384
-  Entered:
-    m_PersistentCalls:
-      m_Calls: []
-  Exited:
-    m_PersistentCalls:
-      m_Calls: []
-  _displayGizmos: 0
-  _showOnlyWhileSelected: 1
-  _gizmoColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!61 &5139186643872887392
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -191,7 +180,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cd6bfe75f55fc524b8969d42191b1c95, type: 3}
   m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0

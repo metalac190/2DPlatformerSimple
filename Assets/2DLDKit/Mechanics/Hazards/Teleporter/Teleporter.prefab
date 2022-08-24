@@ -72,7 +72,7 @@ Transform:
   m_GameObject: {fileID: 7197306056301872212}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7197306057499866043}
@@ -119,7 +119,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8620bcf7fa769e94fa548c2fc0325ef4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ef3d890db91c0b547833f92859018156, type: 3}
   m_Color: {r: 0.7933531, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -209,6 +209,7 @@ MonoBehaviour:
   _exitTransform: {fileID: 185078769102825802}
   _exitParticles: {fileID: 653273450618745292, guid: deb7caf24725df84c9b1d0319c1a0f21, type: 3}
   _teleportSound: {fileID: 8300000, guid: 1b7ecfbe1293cdf4e9799db4258bbbac, type: 3}
+  _lineColor: {r: 1, g: 0, b: 1, a: 1}
 --- !u!1 &7197306057499866042
 GameObject:
   m_ObjectHideFlags: 0

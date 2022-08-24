@@ -78,20 +78,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42cd06e84f3350c43b5cef7e71447b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _oneShot: 0
-  _specificTriggerObject: {fileID: 0}
   _layersDetected:
     serializedVersion: 2
     m_Bits: 4294967295
-  Entered:
-    m_PersistentCalls:
-      m_Calls: []
-  Exited:
-    m_PersistentCalls:
-      m_Calls: []
-  _displayGizmos: 0
-  _showOnlyWhileSelected: 1
-  _gizmoColor: {r: 0, g: 1, b: 0, a: 0.28235295}
   _newSpawnPoint: {fileID: 7089317885132506002}
   _saveParticlePrefab: {fileID: 2010415367784037018, guid: d52bf39decde36244bfec32798726816, type: 3}
   _saveSound: {fileID: 8300000, guid: f13e7411a4d35c1449f63c2f9b014fc3, type: 3}
@@ -194,7 +183,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cd6bfe75f55fc524b8969d42191b1c95, type: 3}
   m_Color: {r: 0, g: 0.91628575, b: 1, a: 0.29803923}
   m_FlipX: 0
   m_FlipY: 0
