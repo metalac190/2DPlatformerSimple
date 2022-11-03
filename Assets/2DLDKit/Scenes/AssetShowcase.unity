@@ -2723,7 +2723,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7585471488309241023, guid: b278bee18a60dfe43bc092afcef900d4, type: 3}
       propertyPath: m_Name
-      value: TriggerVolume
+      value: GenericTriggerVolume
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b278bee18a60dfe43bc092afcef900d4, type: 3}
