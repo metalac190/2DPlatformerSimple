@@ -19552,7 +19552,7 @@ Animator:
   m_GameObject: {fileID: 4646659593778855866}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6e5b5f4662f713845b0c28185c4ea62c, type: 2}
+  m_Controller: {fileID: 9100000, guid: edf0ad6a98657144ebc3fc68b4ef2562, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -19787,8 +19787,6 @@ MonoBehaviour:
   _landParticles: {fileID: 1817616820273933428}
   _footsteps:
   - {fileID: 8300000, guid: a81be8289f40cd3458890bce0ac91806, type: 3}
-  _maxTilt: 5
-  _tiltSpeed: 30
   _maxIdleSpeed: 2
   _maxParticleFallSpeed: -40
 --- !u!82 &1817616821050435666

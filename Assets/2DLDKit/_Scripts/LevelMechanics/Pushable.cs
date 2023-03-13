@@ -19,17 +19,17 @@ public class Pushable : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Vector2 pushDirection = transform.position - other.transform.position;
-            Debug.Log("Push Direction: " + pushDirection);
+            //Debug.Log("Push Direction: " + pushDirection);
             // only keep x movement, can't push 'up', only 'side to side'
             pushDirection = new Vector2(pushDirection.x, 0);
             pushDirection.Normalize();
             // apply force
-            Debug.Log("Adding force..." + pushDirection * _pushAcceleration);
+            //Debug.Log("Adding force..." + pushDirection * _pushAcceleration);
             _rb.AddForce(pushDirection * _pushAcceleration);
             // if we're pushing too fast, clamp it
             float xClampedVelocity = Mathf.Clamp(_rb.velocity.x, -_maxXVelocity, _maxXVelocity);
             _rb.velocity = new Vector2(xClampedVelocity, 0);
-            Debug.Log("Velocity..." + _rb.velocity);
+            //Debug.Log("Velocity..." + _rb.velocity);
         }
     }
 

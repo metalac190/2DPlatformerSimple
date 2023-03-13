@@ -2734,6 +2734,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1305034990}
     m_Modifications:
+    - target: {fileID: 7906465811747236667, guid: 8670debdb71452844a32c1697d1b53fe, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.16037738
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906465811747236667, guid: 8670debdb71452844a32c1697d1b53fe, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.14225507
+      objectReference: {fileID: 0}
+    - target: {fileID: 7906465811747236667, guid: 8670debdb71452844a32c1697d1b53fe, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.1307227
+      objectReference: {fileID: 0}
     - target: {fileID: 7906465811756045197, guid: 8670debdb71452844a32c1697d1b53fe, type: 3}
       propertyPath: m_Name
       value: CameraRig

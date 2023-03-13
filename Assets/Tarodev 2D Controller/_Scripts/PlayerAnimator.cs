@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using Random = UnityEngine.Random;
 
 namespace TarodevController {
@@ -6,19 +7,21 @@ namespace TarodevController {
     /// Game Feel, effects, animation and audio
     /// </summary>
     public class PlayerAnimator : MonoBehaviour {
+
+        [Header("Dependencies")]
         [SerializeField] private Animator _anim;
         [SerializeField] private AudioSource _source;
         [SerializeField] private LayerMask _groundMask;
         [SerializeField] private ParticleSystem _jumpParticles, _launchParticles;
         [SerializeField] private ParticleSystem _moveParticles, _landParticles;
         [SerializeField] private AudioClip[] _footsteps;
-        [SerializeField] private float _maxTilt = .1f;
-        [SerializeField] private float _tiltSpeed = 1;
         [SerializeField, Range(1f, 3f)] private float _maxIdleSpeed = 2;
         [SerializeField] private float _maxParticleFallSpeed = -40;
 
         private IPlayerController _player;
+        private bool _beganMoving = false;
         private bool _playerGrounded;
+        private bool _currentlyIdling = false;
         private ParticleSystem.MinMaxGradient _currentGradient;
         private Vector2 _movement;
 
@@ -30,23 +33,39 @@ namespace TarodevController {
             // Flip the sprite
             if (_player.Input.X != 0) transform.localScale = new Vector3(_player.Input.X > 0 ? 1 : -1, 1, 1);
 
-            // Lean while running
-            var targetRotVector = new Vector3(0, 0, Mathf.Lerp(-_maxTilt, _maxTilt, Mathf.InverseLerp(-1, 1, _player.Input.X)));
-            _anim.transform.rotation = Quaternion.RotateTowards(_anim.transform.rotation, Quaternion.Euler(targetRotVector), _tiltSpeed * Time.deltaTime);
+            // check if we JUST started moving
+            if (_player.Input.X != 0 && _beganMoving == false && _player.Grounded)
+            {
+                _beganMoving = true;
+                Debug.Log("Began Moving");
+                _anim.Play(RunningKey);
 
-            // Speed up idle while running
-            _anim.SetFloat(IdleSpeedKey, Mathf.Lerp(1, _maxIdleSpeed, Mathf.Abs(_player.Input.X)));
+            } 
+            // check if we JUST stopped moving
+            else if(_player.Input.X == 0 && _beganMoving && _player.Grounded)
+            {
+                _beganMoving = false;
+                Debug.Log("Stopped Moving");
+                _anim.Play(IdleKey);
+            }
+
+            //TODO handle 'falling animation' without jump
 
             // Splat
             if (_player.LandingThisFrame) {
-                _anim.SetTrigger(GroundedKey);
+                // _anim.SetTrigger(GroundedKey);
+                Debug.Log("Landed");
+                _anim.Play(IdleKey);
                 _source.PlayOneShot(_footsteps[Random.Range(0, _footsteps.Length)]);
             }
 
             // Jump effects
             if (_player.JumpingThisFrame) {
-                _anim.SetTrigger(JumpKey);
-                _anim.ResetTrigger(GroundedKey);
+
+                //_anim.SetTrigger(JumpKey);
+                //_anim.ResetTrigger(GroundedKey);
+                Debug.Log("Jumped");
+                _anim.Play(JumpKey);
 
                 // Only play particles when grounded (avoid coyote)
                 if (_player.Grounded) {
@@ -92,11 +111,13 @@ namespace TarodevController {
             main.startColor = _currentGradient;
         }
 
+
         #region Animation Keys
 
-        private static readonly int GroundedKey = Animator.StringToHash("Grounded");
-        private static readonly int IdleSpeedKey = Animator.StringToHash("IdleSpeed");
+        private static readonly int IdleKey = Animator.StringToHash("Idle");
+        private static readonly int RunningKey = Animator.StringToHash("Running");
         private static readonly int JumpKey = Animator.StringToHash("Jump");
+
 
         #endregion
     }
